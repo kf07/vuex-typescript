@@ -62,3 +62,21 @@ const getters:Getters<State> = {
   }
 }
 ```
+
+gettersの要件もstateと同じようにinterfaceで明示する  
+interfaceを定義することで整合性のない定義を受け付けないと同時に型推論が可能になる  
+getter関数を定義するときプログラマが自由に決められるのは「関数名」と「戻り値」のみ  
+
+このinterfaceを注入できるように先ほどのGetters型を修正  
+Mapped Types
+```typescript
+interface IGetters {
+  double: number
+  expo2: number
+  expo: (amount: number) => number
+}
+
+type Getters<S, G> = {
+  [K in keyof G]: (state: S,getters: G) => G[K]
+}
+```
